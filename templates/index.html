@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+	 <title>Todo List</title>
+	 <style>
+	 body {
+	 	background-color: black;
+		color: white;
+		font-family: Courier, monospace;
+	 }
+	 .low { color: green;}
+	 .medium { color: orange;}
+	 .high { color: red;}
+	 .todo-item { font-size: 1.5em;}
+	 .delete-button {
+	 font-size: 0.6em;
+	 color: white;
+	 background: grey;
+	 border: none;
+	 cursor: pointer;
+	 }
+	 </style>
+	</head>
+	<body>
+	 <h1>Todo List</h1>
+	 <form action="/create" method="POST">
+	 <label for="title">Task:</label>
+	  <input type="text" name="title" placeholder="New Todo" required>
+	 <label for="urgency">Urgency:</label>
+	  <select name="urgency">
+	   <option value="0">Low</option>
+	   <option value="1">Medium</option>
+	   <option value="2">High</option>
+	  </select>
+	  <button type="submit">Add</button>
+	 </form>
+	 <ul>
+	  {{range .}}
+	   <li class="todo-item {{if eq .Urgency 2}}high{{else if eq .Urgency 1}}medium{{else}}low{{end}}">
+       {{.Title}}
+	   <form action="/delete" method="GET" style="display: inline;">
+	   <input type="hidden" name="id" value="{{.ID}}">
+	   <button type="submit" class="delete-button">Delete</button>
+	   </form>
+      </li>
+	  {{end}}
+	 </ul>
+	</body>
+	</html>
